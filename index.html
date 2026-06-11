@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Repaso - Marketing Digital</title>
+
+    <style>
+        :root {
+            --primary: #00323c;
+            --primary-dark: #00252d;
+            --primary-light: #27728f;
+
+            --secondary: #27728f;
+
+            --success: #27728f;
+            --success-light: #d9edf3;
+
+            --error: #c0392b;
+            --error-light: #fdecea;
+
+            --dark: #00323c;
+            --gray: #5b6b73;
+            --light: #f4f8f9;
+            --white: #ffffff;
+
+            --shadow: 0 4px 6px rgba(0, 0, 0, .12);
+            --shadow-lg: 0 10px 18px rgba(0, 0, 0, .15);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .ejercicio {
+            background: var(--white);
+            padding: 35px;
+            margin-bottom: 30px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ejercicio:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .ejercicio-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .ejercicio-numero {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        h2 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.4rem;
+        }
+
+        .pregunta {
+            font-size: 1.1rem;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* Radio buttons personalizados */
+        .opciones {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .opcion-label {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--light);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .opcion-label:hover {
+            background: #e0e7ff;
+            border-color: var(--primary-light);
+        }
+
+        .opcion-label input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .opcion-label input[type="radio"]:checked+.radio-custom {
+            background: #27728f;
+            border-color: #27728f;
+        }
+
+        .opcion-label input[type="radio"]:checked+.radio-custom::after {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .radio-custom {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--secondary);
+            margin-right: 15px;
+            position: relative;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .radio-custom::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        /* Button */
+        button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback.correcto {
+            background: linear-gradient(135deg, var(--success-light) 0%, #a7f3d0 100%);
+            border: 2px solid var(--success);
+            color: #065f46;
+        }
+
+        .feedback.incorrecto {
+            background: linear-gradient(135deg, var(--error-light) 0%, #fecaca 100%);
+            border: 2px solid var(--error);
+            color: #991b1b;
+        }
+
+        .feedback-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        /* Drag & Drop */
+        .drag-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .drag-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .drag-column-title {
+            font-weight: 600;
+            color: var(--gray);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .draggable {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            cursor: grab;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 6px rgba(37, 99, 235, 0.3);
+        }
+
+        .draggable:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 10px rgba(37, 99, 235, 0.4);
+        }
+
+        .draggable:active {
+            cursor: grabbing;
+        }
+
+        .draggable.dragging {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+
+        .target {
+            background: var(--light);
+            border: 2px dashed var(--secondary);
+            padding: 20px;
+            border-radius: 10px;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .target:hover {
+            border-color: var(--primary);
+            background: #e0e7ff;
+        }
+
+        .target.drag-over {
+            border-color: var(--primary);
+            background: #dbeafe;
+            transform: scale(1.02);
+        }
+
+        .target.correct {
+            background: var(--success-light);
+            border: 2px solid var(--success);
+            color: var(--success);
+            border-style: solid;
+        }
+
+        .target.incorrect {
+            background: var(--error-light);
+            border: 2px solid var(--error);
+            border-style: solid;
+        }
+
+        .target-text {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .target-dropped {
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .ejercicio {
+                padding: 25px;
+            }
+
+            .drag-container {
+                grid-template-columns: 1fr;
+            }
+
+            .ejercicio-header {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+        }
+
+        /* Animación de éxito */
+        @keyframes celebrate {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .celebrate {
+            animation: celebrate 0.5s ease;
+        }
+
+        #reiniciarBtn {
+
+            background: #27728f;
+            margin-top: 25px;
+
+        }
+
+        #reiniciarBtn:hover {
+
+            background: #00323c;
+            transform: scale(1.03);
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>📚 Ejercicios de Repaso</h1>
+        <p>Marketing Digital - Pon a prueba tus conocimientos</p>
+    </header>
+
+    <div class="container">
+
+        <!-- EJERCICIO 1 -->
+
+        <div class="ejercicio">
+
+            <div class="ejercicio-header">
+                <div class="ejercicio-numero">1</div>
+                <h2>Verdadero o Falso</h2>
+            </div>
+
+            <p class="pregunta">
+                El marketing digital permite realizar campañas <strong>sin la necesidad de medir</strong> la respuesta
+                del público.
+            </p>
+
+            <div class="opciones">
+                <label class="opcion-label">
+                    <input type="radio" name="vf" value="Verdadero">
+                    <span class="radio-custom"></span>
+                    <span>✅ Verdadero</span>
+                </label>
+
+                <label class="opcion-label">
+                    <input type="radio" name="vf" value="Falso">
+                    <span class="radio-custom"></span>
+                    <span>❌ Falso</span>
+                </label>
+            </div>
+
+            <button onclick="validarVF()">Comprobar respuesta</button>
+
+            <div id="feed1" class="feedback"></div>
+
+        </div>
+
+        <!-- EJERCICIO 2 -->
+
+        <div class="ejercicio">
+
+            <div class="ejercicio-header">
+                <div class="ejercicio-numero">2</div>
+                <h2>Selección Múltiple</h2>
+            </div>
+
+            <p class="pregunta">
+                ¿Cuál de las siguientes estrategias de marketing digital busca construir <strong>relaciones a largo
+                    plazo</strong> con los clientes?
+            </p>
+
+            <div class="opciones">
+                <label class="opcion-label">
+                    <input type="radio" name="preg2" value="a">
+                    <span class="radio-custom"></span>
+                    <span>a) Marketing viral 🌟</span>
+                </label>
+
+                <label class="opcion-label">
+                    <input type="radio" name="preg2" value="b">
+                    <span class="radio-custom"></span>
+                    <span>b) Marketing relacional 🤝</span>
+                </label>
+
+                <label class="opcion-label">
+                    <input type="radio" name="preg2" value="c">
+                    <span class="radio-custom"></span>
+                    <span>c) Marketing de contenidos 📝</span>
+                </label>
+
+                <label class="opcion-label">
+                    <input type="radio" name="preg2" value="d">
+                    <span class="radio-custom"></span>
+                    <span>d) Marketing de segmentación 🎯</span>
+                </label>
+            </div>
+
+            <button onclick="validarP2()">Comprobar respuesta</button>
+
+            <div id="feed2" class="feedback"></div>
+
+        </div>
+
+        <!-- EJERCICIO 3 -->
+
+        <div class="ejercicio">
+
+            <div class="ejercicio-header">
+                <div class="ejercicio-numero">3</div>
+                <h2>Arrastra y Suelta</h2>
+            </div>
+
+            <p class="pregunta">
+                <strong>Empareja cada componente</strong> con su función arrastrando los elementos de la izquierda hacia
+                su descripción correspondiente.
+            </p>
+
+            <div class="drag-container">
+
+                <div class="drag-column">
+                    <div class="drag-column-title">Componentes</div>
+
+                    <div class="draggable" draggable="true" id="SEO">
+                        🔍 SEO
+                    </div>
+
+                    <div class="draggable" draggable="true" id="SEM">
+                        💰 SEM
+                    </div>
+
+                    <div class="draggable" draggable="true" id="Blog">
+                        📝 Blog
+                    </div>
+
+                    <div class="draggable" draggable="true" id="Buyer Persona">
+                        👤 Buyer Persona
+                    </div>
+                </div>
+
+                <div class="drag-column">
+                    <div class="drag-column-title">Funciones</div>
+
+                    <div class="target" data-match="SEO">
+                        <span class="target-text">a) Mejora la visibilidad en buscadores.</span>
+                    </div>
+
+                    <div class="target" data-match="Blog">
+                        <span class="target-text">b) Creación de contenido para atraer audiencia.</span>
+                    </div>
+
+                    <div class="target" data-match="Buyer Persona">
+                        <span class="target-text">c) Análisis de clientes ideales para personalizar campañas.</span>
+                    </div>
+
+                    <div class="target" data-match="SEM">
+                        <span class="target-text">d) Mejorar presencia en motores de búsqueda a través de links
+                            patrocinados.</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <button onclick="verificarDrag()">Verificar respuestas</button>
+
+            <div id="feed3" class="feedback"></div>
+
+        </div>
+        <div style="text-align:center;margin-top:35px;">
+
+            <button onclick="reiniciarEjercicios()" id="reiniciarBtn">
+                🔄 Repetir todos los ejercicios
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        function reiniciarEjercicios() {
+
+            //Quitar radios seleccionados
+            document.querySelectorAll('input[type="radio"]').forEach(r => {
+                r.checked = false;
+            });
+
+            //Ocultar retroalimentaciones
+            document.querySelectorAll('.feedback').forEach(f => {
+
+                f.style.display = "none";
+                f.innerHTML = "";
+                f.className = "feedback";
+
+            });
+
+            //Reiniciar zonas drag
+            document.querySelectorAll(".target").forEach(target => {
+
+                target.classList.remove(
+                    "correct",
+                    "incorrect",
+                    "drag-over"
+                );
+
+                target.dataset.user = "";
+
+            });
+
+            //Restaurar textos originales
+            document.querySelectorAll(".target")[0].innerHTML =
+                '<span class="target-text">a) Mejora la visibilidad en buscadores.</span>';
+
+            document.querySelectorAll(".target")[1].innerHTML =
+                '<span class="target-text">b) Creación de contenido para atraer audiencia.</span>';
+
+            document.querySelectorAll(".target")[2].innerHTML =
+                '<span class="target-text">c) Análisis de clientes ideales para personalizar campañas.</span>';
+
+            document.querySelectorAll(".target")[3].innerHTML =
+                '<span class="target-text">d) Mejorar presencia en motores de búsqueda a través de links patrocinados.</span>';
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+        //-----------------
+        // Ejercicio 1
+        //-----------------
+
+        function validarVF() {
+            const opcion = document.querySelector('input[name="vf"]:checked');
+            const feed = document.getElementById('feed1');
+
+            if (!opcion) {
+                alert("Por favor, selecciona una respuesta");
+                return;
+            }
+
+            feed.style.display = "block";
+            feed.classList.remove("celebrate");
+
+            if (opcion.value === "Falso") {
+                feed.className = "feedback correcto";
+                feed.innerHTML = `<span class="feedback-icon">✅</span><strong>¡Correcto!</strong><br>La medición de reacciones y resultados es esencial en marketing digital para ajustar estrategias y obtener mejores resultados.`;
+                setTimeout(() => feed.classList.add('celebrate'), 10);
+            } else {
+                feed.className = "feedback incorrecto";
+                feed.innerHTML = `<span class="feedback-icon">❌</span><strong>Incorrecto.</strong><br>La medición de resultados es fundamental en marketing digital.`;
+            }
+        }
+
+        //-----------------
+        // Ejercicio 2
+        //-----------------
+
+        function validarP2() {
+            const opcion = document.querySelector('input[name="preg2"]:checked');
+            const feed = document.getElementById('feed2');
+
+            if (!opcion) {
+                alert("Por favor, selecciona una respuesta");
+                return;
+            }
+
+            feed.style.display = "block";
+            feed.classList.remove("celebrate");
+
+            if (opcion.value === "b") {
+                feed.className = "feedback correcto";
+                feed.innerHTML = `<span class="feedback-icon">✅</span><strong>¡Correcto!</strong><br>El marketing relacional busca crear vínculos duraderos con los clientes, fomentando fidelidad y confianza a largo plazo.`;
+                setTimeout(() => feed.classList.add('celebrate'), 10);
+            } else {
+                feed.className = "feedback incorrecto";
+                feed.innerHTML = `<span class="feedback-icon">❌</span><strong>Incorrecto.</strong><br>La respuesta correcta es <strong>b) Marketing relacional</strong>.`;
+            }
+        }
+
+        //-----------------
+        // Ejercicio 3 - Drag & Drop
+        //-----------------
+
+        const draggables = document.querySelectorAll('.draggable');
+        const targets = document.querySelectorAll('.target');
+
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', (e) => {
+                draggable.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', draggable.id);
+                e.dataTransfer.effectAllowed = 'move';
+            });
+
+            draggable.addEventListener('dragend', () => {
+                draggable.classList.remove('dragging');
+            });
+        });
+
+        targets.forEach(target => {
+            target.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                target.classList.add('drag-over');
+            });
+
+            target.addEventListener('dragleave', () => {
+                target.classList.remove('drag-over');
+            });
+
+            target.addEventListener('drop', (e) => {
+                e.preventDefault();
+                target.classList.remove('drag-over');
+
+                const id = e.dataTransfer.getData('text/plain');
+                const draggable = document.getElementById(id);
+
+                if (draggable && !target.querySelector('.draggable')) {
+                    const newDraggable = draggable.cloneNode(true);
+                    newDraggable.classList.remove('dragging');
+                    newDraggable.style.cursor = 'default';
+                    newDraggable.removeAttribute('draggable');
+
+                    target.innerHTML = '';
+                    target.appendChild(newDraggable);
+                    target.dataset.user = id;
+                }
+            });
+        });
+
+        function verificarDrag() {
+            const targets = document.querySelectorAll('.target');
+            let correctas = 0;
+            let contestadas = 0;
+
+            targets.forEach(target => {
+                if (target.dataset.user) {
+                    contestadas++;
+                    target.classList.remove('correct', 'incorrect');
+
+                    if (target.dataset.user === target.dataset.match) {
+                        target.classList.add('correct');
+                        correctas++;
+                    } else {
+                        target.classList.add('incorrect');
+                    }
+                }
+            });
+
+            const feed = document.getElementById('feed3');
+            feed.style.display = 'block';
+            feed.classList.remove('celebrate');
+
+            if (contestadas < 4) {
+                feed.className = 'feedback incorrecto';
+                feed.innerHTML = `<span class="feedback-icon">⚠️</span><strong>¡Faltan respuestas!</strong><br>Aún hay ${4 - contestadas} elementos sin arrastrar.`;
+                return;
+            }
+
+            if (correctas === 4) {
+                feed.className = 'feedback correcto';
+                feed.innerHTML = `<span class="feedback-icon">🎉</span><strong>¡Excelente!</strong><br>¡Todas las asociaciones son correctas!`;
+                setTimeout(() => feed.classList.add('celebrate'), 10);
+            } else {
+                feed.className = 'feedback incorrecto';
+                feed.innerHTML = `<span class="feedback-icon">❌</span><strong>incorrecto.</strong><br>Has acertado <strong>${correctas} de 4</strong> relaciones. Revisa las opciones e intenta nuevamente.`;
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
+
+</body>
+
+</html>
