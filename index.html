@@ -34,7 +34,7 @@
         }
 
         body {
-            font-family: poppins;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
             margin: 0;
             padding: 0;
@@ -291,6 +291,13 @@
             transform: scale(0.95);
         }
 
+        .drag-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-self: flex-start;
+        }
+
         .target {
             background: var(--light);
             border: 2px dashed var(--secondary);
@@ -393,7 +400,7 @@
 
     <header>
         <h1>📚 Ejercicios de Repaso</h1>
-        <p>Marketing Digital - Pon a prueba tus conocimientos</p>
+        <p><b>Responda los siguientes ejercicios:</b></p>
     </header>
 
     <div class="container">
@@ -545,6 +552,7 @@
         <div style="text-align:center;margin-top:35px;">
 
             <button onclick="reiniciarEjercicios()" id="reiniciarBtn">
+                
                 🔄 Repetir todos los ejercicios
             </button>
 
@@ -602,6 +610,7 @@
                 top: 0,
                 behavior: "smooth"
             });
+            location.reload();
 
         }
 
@@ -694,6 +703,7 @@
                 const draggable = document.getElementById(id);
 
                 if (draggable && !target.querySelector('.draggable')) {
+
                     const newDraggable = draggable.cloneNode(true);
                     newDraggable.classList.remove('dragging');
                     newDraggable.style.cursor = 'default';
@@ -702,6 +712,9 @@
                     target.innerHTML = '';
                     target.appendChild(newDraggable);
                     target.dataset.user = id;
+
+                    // Eliminar la tarjeta original de la izquierda
+                    draggable.remove();
                 }
             });
         });
@@ -743,7 +756,13 @@
                 feed.className = 'feedback incorrecto';
                 feed.innerHTML = `<span class="feedback-icon">❌</span><strong>incorrecto.</strong><br>Has acertado <strong>${correctas} de 4</strong> relaciones. Revisa las opciones e intenta nuevamente.`;
             }
+            // Mostrar nuevamente las tarjetas arrastrables
+            document.querySelectorAll('.draggable').forEach(item => {
+                item.style.display = 'block';
+            });
         }
+
+
 
     </script>
 
