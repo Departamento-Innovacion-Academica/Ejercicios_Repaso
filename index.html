@@ -1,775 +1,396 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejercicios de Repaso - Marketing Digital</title>
-
-    <style>
-        :root {
-            --primary: #00323c;
-            --primary-dark: #00252d;
-            --primary-light: #27728f;
-
-            --secondary: #27728f;
-
-            --success: #27728f;
-            --success-light: #d9edf3;
-
-            --error: #c0392b;
-            --error-light: #fdecea;
-
-            --dark: #00323c;
-            --gray: #5b6b73;
-            --light: #f4f8f9;
-            --white: #ffffff;
-
-            --shadow: 0 4px 6px rgba(0, 0, 0, .12);
-            --shadow-lg: 0 10px 18px rgba(0, 0, 0, .15);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
-            margin: 0;
-            padding: 0;
-            color: var(--dark);
-            min-height: 100vh;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: var(--shadow-lg);
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        header p {
-            margin: 10px 0 0;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .ejercicio {
-            background: var(--white);
-            padding: 35px;
-            margin-bottom: 30px;
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .ejercicio:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .ejercicio-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--light);
-        }
-
-        .ejercicio-numero {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        h2 {
-            margin: 0;
-            color: var(--dark);
-            font-size: 1.4rem;
-        }
-
-        .pregunta {
-            font-size: 1.1rem;
-            color: var(--gray);
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        /* Radio buttons personalizados */
-        .opciones {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .opcion-label {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            background: var(--light);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 2px solid transparent;
-        }
-
-        .opcion-label:hover {
-            background: #e0e7ff;
-            border-color: var(--primary-light);
-        }
-
-        .opcion-label input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-        }
-
-        .opcion-label input[type="radio"]:checked+.radio-custom {
-            background: #27728f;
-            border-color: #27728f;
-        }
-
-        .opcion-label input[type="radio"]:checked+.radio-custom::after {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .radio-custom {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            border: 2px solid var(--secondary);
-            margin-right: 15px;
-            position: relative;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-        }
-
-        .radio-custom::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
-            transition: all 0.2s ease;
-        }
-
-        /* Button */
-        button {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.4);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        /* Feedback */
-        .feedback {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 12px;
-            display: none;
-            animation: slideIn 0.4s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .feedback.correcto {
-            background: linear-gradient(135deg, var(--success-light) 0%, #a7f3d0 100%);
-            border: 2px solid var(--success);
-            color: #065f46;
-        }
-
-        .feedback.incorrecto {
-            background: linear-gradient(135deg, var(--error-light) 0%, #fecaca 100%);
-            border: 2px solid var(--error);
-            color: #991b1b;
-        }
-
-        .feedback-icon {
-            font-size: 1.5rem;
-            margin-right: 10px;
-        }
-
-        /* Drag & Drop */
-        .drag-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-top: 25px;
-        }
-
-        .drag-column {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .drag-column-title {
-            font-weight: 600;
-            color: var(--gray);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        .draggable {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            cursor: grab;
-            text-align: center;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            box-shadow: 0 3px 6px rgba(37, 99, 235, 0.3);
-        }
-
-        .draggable:hover {
-            transform: scale(1.02);
-            box-shadow: 0 5px 10px rgba(37, 99, 235, 0.4);
-        }
-
-        .draggable:active {
-            cursor: grabbing;
-        }
-
-        .draggable.dragging {
-            opacity: 0.5;
-            transform: scale(0.95);
-        }
-
-        .drag-column {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            align-self: flex-start;
-        }
-
-        .target {
-            background: var(--light);
-            border: 2px dashed var(--secondary);
-            padding: 20px;
-            border-radius: 10px;
-            min-height: 70px;
-            display: flex;
-            align-items: center;
-            transition: all 0.2s ease;
-        }
-
-        .target:hover {
-            border-color: var(--primary);
-            background: #e0e7ff;
-        }
-
-        .target.drag-over {
-            border-color: var(--primary);
-            background: #dbeafe;
-            transform: scale(1.02);
-        }
-
-        .target.correct {
-            background: var(--success-light);
-            border: 2px solid var(--success);
-            color: var(--success);
-            border-style: solid;
-        }
-
-        .target.incorrect {
-            background: var(--error-light);
-            border: 2px solid var(--error);
-            border-style: solid;
-        }
-
-        .target-text {
-            color: var(--gray);
-            font-size: 0.95rem;
-        }
-
-        .target-dropped {
-            font-weight: 600;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8rem;
-            }
-
-            .ejercicio {
-                padding: 25px;
-            }
-
-            .drag-container {
-                grid-template-columns: 1fr;
-            }
-
-            .ejercicio-header {
-                flex-direction: column;
-                align-items: flex-start;
-                text-align: left;
-            }
-        }
-
-        /* Animación de éxito */
-        @keyframes celebrate {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        .celebrate {
-            animation: celebrate 0.5s ease;
-        }
-
-        #reiniciarBtn {
-
-            background: #27728f;
-            margin-top: 25px;
-
-        }
-
-        #reiniciarBtn:hover {
-
-            background: #00323c;
-            transform: scale(1.03);
-
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glosario de Marketing Digital</title>
+
+<style>
+
+:root{
+    --principal:#00323c;
+    --secundario:#27728f;
+    --fondo:#eef5f7;
+    --blanco:#ffffff;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Poppins;
+}
+
+body{
+    background:var(--fondo);
+    padding:40px 20px;
+}
+
+.contenedor{
+    max-width:1100px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    color:var(--principal);
+    margin-bottom:10px;
+    font-size:40px;
+}
+
+.subtitulo{
+    text-align:center;
+    color:#555;
+    margin-bottom:30px;
+}
+
+.buscador{
+    margin-bottom:25px;
+}
+
+.buscador input{
+    width:100%;
+    padding:15px 20px;
+    border:none;
+    border-radius:40px;
+    font-size:17px;
+    outline:none;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+    transition:.3s;
+}
+
+.buscador input:focus{
+    transform:scale(1.01);
+    box-shadow:0 8px 20px rgba(39,114,143,.3);
+}
+
+.letras{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    margin-bottom:35px;
+}
+
+.letras button{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:white;
+    cursor:pointer;
+    font-weight:bold;
+    color:var(--principal);
+    transition:.3s;
+    box-shadow:0 3px 8px rgba(0,0,0,.1);
+}
+
+.letras button:hover,
+.letras button.activo{
+    background:var(--secundario);
+    color:white;
+    transform:scale(1.08);
+}
+
+.seccion{
+    display:none;
+    animation:fade .4s;
+}
+
+.seccion.visible{
+    display:block;
+}
+
+.titulo-letra{
+    background:var(--principal);
+    color:white;
+    padding:12px 20px;
+    border-radius:10px;
+    margin-bottom:15px;
+    font-size:26px;
+}
+
+.tarjeta{
+    background:white;
+    padding:18px;
+    margin-bottom:12px;
+    border-left:7px solid var(--secundario);
+    border-radius:10px;
+    box-shadow:0 5px 12px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.tarjeta:hover{
+    transform:translateX(5px);
+}
+
+.tarjeta h3{
+    color:var(--principal);
+    margin-bottom:8px;
+}
+
+.tarjeta p{
+    color:#555;
+    line-height:1.5;
+    text-align: left;
+}
+
+.sinResultados{
+    display:none;
+    text-align:center;
+    margin-top:30px;
+    font-size:22px;
+    color:var(--principal);
+}
+
+@keyframes fade{
+
+from{
+opacity:0;
+transform:translateY(15px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+</style>
+
 </head>
-
 <body>
 
-    <header>
-        <h1>📚 Ejercicios de Repaso</h1>
-        <p><b>Responda los siguientes ejercicios:</b></p>
-    </header>
+<div class="contenedor">
 
-    <div class="container">
+<h1>Glosario</h1>
+<p class="subtitulo">
+Haga <b>clic</b> sobre el botón de las letras para ampliar la información.
+</p>
 
-        <!-- EJERCICIO 1 -->
+<div class="buscador">
+<input type="text" id="buscar" placeholder="Buscar término...">
+</div>
 
-        <div class="ejercicio">
+<div class="letras">
 
-            <div class="ejercicio-header">
-                <div class="ejercicio-numero">1</div>
-                <h2>Verdadero o Falso</h2>
-            </div>
+<button class="activo" onclick="mostrar('A',this)">A</button>
+<button onclick="mostrar('B',this)">B</button>
+<button onclick="mostrar('M',this)">M</button>
+<button onclick="mostrar('R',this)">R</button>
+<button onclick="mostrar('S',this)">S</button>
+<button onclick="mostrar('T',this)">T</button>
+<button onclick="mostrar('V',this)">V</button>
+<button onclick="mostrarTodo(this)">Todos</button>
 
-            <p class="pregunta">
-                El marketing digital permite realizar campañas <strong>sin la necesidad de medir</strong> la respuesta
-                del público.
-            </p>
+</div>
 
-            <div class="opciones">
-                <label class="opcion-label">
-                    <input type="radio" name="vf" value="Verdadero">
-                    <span class="radio-custom"></span>
-                    <span>✅ Verdadero</span>
-                </label>
+<div id="glosario">
 
-                <label class="opcion-label">
-                    <input type="radio" name="vf" value="Falso">
-                    <span class="radio-custom"></span>
-                    <span>❌ Falso</span>
-                </label>
-            </div>
+<!-- LETRA A -->
+<div class="seccion visible" data-letra="A">
+<div class="titulo-letra">A</div>
 
-            <button onclick="validarVF()">Comprobar respuesta</button>
+<div class="tarjeta">
+<h3>Alcance</h3>
+<p>El alcance se refiere a la audiencia a la que llega un mensaje de marketing, que puede ser una campaña de anúncios en redes sociales o una pauta en televisión. No importa la plataforma, siempre y cuando haya manera de medir cuánta gente ha tenido contacto con ella. Su manera de presentar es en forma de porcentaje y permite la creación de segmentaciones al momento de definir los buyer personas.</p>
+</div>
 
-            <div id="feed1" class="feedback"></div>
+<div class="tarjeta">
+<h3>Analítica web</h3>
+<p>Son datos que se obtienen del comportamiento de los usuarios que visitan un sitio web y que, al analizarlos, permiten identificar oportunidades para mejorar o ampliar el diseño y oferta de contenidos en el sitio, que devienen en el alcance de objetivos del negocio o marca.</p>
+</div>
 
-        </div>
+<div class="tarjeta">
+<h3>Atención al cliente</h3>
+<p>Área encargada de darle seguimiento a las interacciones de y con las personas que desean convertirse en clientes o que ya lo son. Tiene como finalidad resolver dudas, atender quejas y, en general, propender por asegurar la satisfacción de quienes se acercan a una organización.</p>
+</div>
 
-        <!-- EJERCICIO 2 -->
+<div class="tarjeta">
+<h3>Automatización</h3>
+<p>La automatización tiene que ver con el uso de herramientas digitales y de inteligencia artificial (como un CRM) para gestionar las tareas repetitivas que requieren captación de datos, envío de información o programación de publicaciones, por ejemplo. Eso permite que las personas que están en marketing se concentren en aspectos que requieren más creatividad, búsqueda de innovaciones y soluciones, análisis de datos e interpretación del comportamiento de los clientes, entre otras acciones que implican más tiempo.</p>
+</div>
 
-        <div class="ejercicio">
+</div>
 
-            <div class="ejercicio-header">
-                <div class="ejercicio-numero">2</div>
-                <h2>Selección Múltiple</h2>
-            </div>
+<!-- LETRA B -->
+<div class="seccion" data-letra="B">
+<div class="titulo-letra">B</div>
 
-            <p class="pregunta">
-                ¿Cuál de las siguientes estrategias de marketing digital busca construir <strong>relaciones a largo
-                    plazo</strong> con los clientes?
-            </p>
+<div class="tarjeta">
+<h3>Blog</h3>
+<p>Las marcas pueden crear un blog para compartir contenido que interese a su audiencia, les brinde información pertinente sobre sus productos, servicios y logros, o les eduque sobre cómo agregar valor a su vida.</p>
+</div>
 
-            <div class="opciones">
-                <label class="opcion-label">
-                    <input type="radio" name="preg2" value="a">
-                    <span class="radio-custom"></span>
-                    <span>a) Marketing viral 🌟</span>
-                </label>
+<div class="tarjeta">
+<h3>Buyer persona</h3>
+<p>Representa los clientes ideales de una marca u organización, y se cuantifica por los datos que se obtienen de la investigación de mercados. Con los buyer personas es posible crear estrategias y contenidos personalizados, porque están respaldados por información real, así que los esfuerzos de marketing son más efectivos.</p>
+</div>
 
-                <label class="opcion-label">
-                    <input type="radio" name="preg2" value="b">
-                    <span class="radio-custom"></span>
-                    <span>b) Marketing relacional 🤝</span>
-                </label>
+</div>
 
-                <label class="opcion-label">
-                    <input type="radio" name="preg2" value="c">
-                    <span class="radio-custom"></span>
-                    <span>c) Marketing de contenidos 📝</span>
-                </label>
+<!-- LETRA M -->
+<div class="seccion" data-letra="M">
+<div class="titulo-letra">M</div>
 
-                <label class="opcion-label">
-                    <input type="radio" name="preg2" value="d">
-                    <span class="radio-custom"></span>
-                    <span>d) Marketing de segmentación 🎯</span>
-                </label>
-            </div>
+<div class="tarjeta">
+<h3>Marketing de contenidos</h3>
+<p>El marketing de contenidos es una estrategia que busca atraer clientes y crecer audiencia gracias a la creación de contenidos originales y valiosos que dan un beneficio a sus consumidores, especialmente porque les entretiene, da información actualizada o educa en un tema en específico. Puede ser en el formato que sea y se comparte en diferentes plataformas, como blogs, espacios en otros medios de comunicación, canales de transmisión, etc.</p>
+</div>
 
-            <button onclick="validarP2()">Comprobar respuesta</button>
+</div>
 
-            <div id="feed2" class="feedback"></div>
+<!-- LETRA R -->
+<div class="seccion" data-letra="R">
+<div class="titulo-letra">R</div>
 
-        </div>
+<div class="tarjeta">
+<h3>Redes sociales</h3>
+<p>Son todas las plataformas en las que la gente se registra para compartir publicaciones, actividades e interacciones con otros miembros en el espacio creado. Generalmente su uso es gratuito para los usuarios, a menos que se trate de promover una marca o negocio, en cuyo caso aprovecha el público dentro de la red social para promocionar sus productos o servicios.</p>
+</div>
 
-        <!-- EJERCICIO 3 -->
+</div>
 
-        <div class="ejercicio">
+<!-- LETRA S -->
+<div class="seccion" data-letra="S">
+<div class="titulo-letra">S</div>
 
-            <div class="ejercicio-header">
-                <div class="ejercicio-numero">3</div>
-                <h2>Arrastra y Suelta</h2>
-            </div>
+<div class="tarjeta">
+<h3>Segmentación</h3>
+<p>La segmentación es la forma en que el marketing clasifica al mercado, según ciertas características que pueden basarse en datos demográficos, socioeconómicos, de comportamiento y otros. Gracias a una buena segmentación, una marca o negocio es capaz de gestionar sus acciones de marketing, dirigiendo las adecuadas para cada tipo de cliente y administrando mejor los recursos.</p>
+</div>
 
-            <p class="pregunta">
-                <strong>Empareja cada componente</strong> con su función arrastrando los elementos de la izquierda hacia
-                su descripción correspondiente.
-            </p>
+</div>
 
-            <div class="drag-container">
+<!-- LETRA T -->
+<div class="seccion" data-letra="T">
+<div class="titulo-letra">T</div>
 
-                <div class="drag-column">
-                    <div class="drag-column-title">Componentes</div>
+<div class="tarjeta">
+<h3>Tienda en línea</h3>
+<p>Es el espacio digital en donde una marca o negocio vende sus productos o servicios. Dado el alcance de la empresa, sus capacidades y recursos, la tienda en línea puede vender a cualquier parte del mundo o del país donde opera, sin restricciones de horario.</p>
+</div>
 
-                    <div class="draggable" draggable="true" id="SEO">
-                        🔍 SEO
-                    </div>
+</div>
 
-                    <div class="draggable" draggable="true" id="SEM">
-                        💰 SEM
-                    </div>
+<!-- LETRA V -->
+<div class="seccion" data-letra="V">
+<div class="titulo-letra">V</div>
 
-                    <div class="draggable" draggable="true" id="Blog">
-                        📝 Blog
-                    </div>
+<div class="tarjeta">
+<h3>Ventas</h3>
+<p>En términos de marketing, es un área encargada de calificar los leads que envía marketing para convertirlos en clientes. Está encargada de todo el proceso de compra y tiene una comunicación directa con atención al cliente, para asegurar un seguimiento oportuno y la satisfacción de los consumidores.</p>
+</div>
 
-                    <div class="draggable" draggable="true" id="Buyer Persona">
-                        👤 Buyer Persona
-                    </div>
-                </div>
+</div>
 
-                <div class="drag-column">
-                    <div class="drag-column-title">Funciones</div>
+</div>
 
-                    <div class="target" data-match="SEO">
-                        <span class="target-text">a) Mejora la visibilidad en buscadores.</span>
-                    </div>
+<div class="sinResultados" id="mensaje">
+No se encontraron resultados.
+</div>
 
-                    <div class="target" data-match="Blog">
-                        <span class="target-text">b) Creación de contenido para atraer audiencia.</span>
-                    </div>
+</div>
 
-                    <div class="target" data-match="Buyer Persona">
-                        <span class="target-text">c) Análisis de clientes ideales para personalizar campañas.</span>
-                    </div>
+<script>
 
-                    <div class="target" data-match="SEM">
-                        <span class="target-text">d) Mejorar presencia en motores de búsqueda a través de links
-                            patrocinados.</span>
-                    </div>
-                </div>
+const buscador=document.getElementById("buscar");
+const tarjetas=document.querySelectorAll(".tarjeta");
+const mensaje=document.getElementById("mensaje");
 
-            </div>
+function limpiarBotones(){
+document.querySelectorAll(".letras button").forEach(b=>{
+b.classList.remove("activo");
+});
+}
 
-            <button onclick="verificarDrag()">Verificar respuestas</button>
+function mostrar(letra,boton){
 
-            <div id="feed3" class="feedback"></div>
+limpiarBotones();
+boton.classList.add("activo");
 
-        </div>
-        <div style="text-align:center;margin-top:35px;">
+document.querySelectorAll(".seccion").forEach(sec=>{
 
-            <button onclick="reiniciarEjercicios()" id="reiniciarBtn">
-                
-                🔄 Repetir todos los ejercicios
-            </button>
+if(sec.dataset.letra===letra){
+sec.classList.add("visible");
+}else{
+sec.classList.remove("visible");
+}
 
-        </div>
+});
 
-    </div>
+buscador.value="";
+mensaje.style.display="none";
 
+document.querySelectorAll(".tarjeta").forEach(t=>{
+t.style.display="block";
+});
 
+}
 
-    <script>
+function mostrarTodo(boton){
 
-        function reiniciarEjercicios() {
+limpiarBotones();
+boton.classList.add("activo");
 
-            //Quitar radios seleccionados
-            document.querySelectorAll('input[type="radio"]').forEach(r => {
-                r.checked = false;
-            });
+document.querySelectorAll(".seccion").forEach(sec=>{
+sec.classList.add("visible");
+});
 
-            //Ocultar retroalimentaciones
-            document.querySelectorAll('.feedback').forEach(f => {
+buscador.value="";
+mensaje.style.display="none";
 
-                f.style.display = "none";
-                f.innerHTML = "";
-                f.className = "feedback";
+document.querySelectorAll(".tarjeta").forEach(t=>{
+t.style.display="block";
+});
 
-            });
+}
 
-            //Reiniciar zonas drag
-            document.querySelectorAll(".target").forEach(target => {
+buscador.addEventListener("keyup",function(){
 
-                target.classList.remove(
-                    "correct",
-                    "incorrect",
-                    "drag-over"
-                );
+let texto=this.value.toLowerCase();
+let encontrados=0;
 
-                target.dataset.user = "";
+document.querySelectorAll(".seccion").forEach(sec=>{
+sec.classList.add("visible");
+});
 
-            });
+limpiarBotones();
 
-            //Restaurar textos originales
-            document.querySelectorAll(".target")[0].innerHTML =
-                '<span class="target-text">a) Mejora la visibilidad en buscadores.</span>';
+document.querySelectorAll(".tarjeta").forEach(t=>{
 
-            document.querySelectorAll(".target")[1].innerHTML =
-                '<span class="target-text">b) Creación de contenido para atraer audiencia.</span>';
+if(t.innerText.toLowerCase().includes(texto)){
+t.style.display="block";
+encontrados++;
+}
+else{
+t.style.display="none";
+}
 
-            document.querySelectorAll(".target")[2].innerHTML =
-                '<span class="target-text">c) Análisis de clientes ideales para personalizar campañas.</span>';
+});
 
-            document.querySelectorAll(".target")[3].innerHTML =
-                '<span class="target-text">d) Mejorar presencia en motores de búsqueda a través de links patrocinados.</span>';
+document.querySelectorAll(".seccion").forEach(sec=>{
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-            location.reload();
+const visibles=sec.querySelectorAll('.tarjeta[style="display: block;"], .tarjeta:not([style])');
 
-        }
+let tieneVisible=false;
 
-        //-----------------
-        // Ejercicio 1
-        //-----------------
+sec.querySelectorAll(".tarjeta").forEach(t=>{
+if(t.style.display!="none"){
+tieneVisible=true;
+}
+});
 
-        function validarVF() {
-            const opcion = document.querySelector('input[name="vf"]:checked');
-            const feed = document.getElementById('feed1');
+sec.style.display=tieneVisible?"block":"none";
 
-            if (!opcion) {
-                alert("Por favor, selecciona una respuesta");
-                return;
-            }
+});
 
-            feed.style.display = "block";
-            feed.classList.remove("celebrate");
+mensaje.style.display=encontrados? "none":"block";
 
-            if (opcion.value === "Falso") {
-                feed.className = "feedback correcto";
-                feed.innerHTML = `<span class="feedback-icon">✅</span><strong>¡Correcto!</strong><br>La medición de reacciones y resultados es esencial en marketing digital para ajustar estrategias y obtener mejores resultados.`;
-                setTimeout(() => feed.classList.add('celebrate'), 10);
-            } else {
-                feed.className = "feedback incorrecto";
-                feed.innerHTML = `<span class="feedback-icon">❌</span><strong>Incorrecto.</strong><br>La medición de resultados es fundamental en marketing digital.`;
-            }
-        }
+});
 
-        //-----------------
-        // Ejercicio 2
-        //-----------------
-
-        function validarP2() {
-            const opcion = document.querySelector('input[name="preg2"]:checked');
-            const feed = document.getElementById('feed2');
-
-            if (!opcion) {
-                alert("Por favor, selecciona una respuesta");
-                return;
-            }
-
-            feed.style.display = "block";
-            feed.classList.remove("celebrate");
-
-            if (opcion.value === "b") {
-                feed.className = "feedback correcto";
-                feed.innerHTML = `<span class="feedback-icon">✅</span><strong>¡Correcto!</strong><br>El marketing relacional busca crear vínculos duraderos con los clientes, fomentando fidelidad y confianza a largo plazo.`;
-                setTimeout(() => feed.classList.add('celebrate'), 10);
-            } else {
-                feed.className = "feedback incorrecto";
-                feed.innerHTML = `<span class="feedback-icon">❌</span><strong>Incorrecto.</strong><br>La respuesta correcta es <strong>b) Marketing relacional</strong>.`;
-            }
-        }
-
-        //-----------------
-        // Ejercicio 3 - Drag & Drop
-        //-----------------
-
-        const draggables = document.querySelectorAll('.draggable');
-        const targets = document.querySelectorAll('.target');
-
-        draggables.forEach(draggable => {
-            draggable.addEventListener('dragstart', (e) => {
-                draggable.classList.add('dragging');
-                e.dataTransfer.setData('text/plain', draggable.id);
-                e.dataTransfer.effectAllowed = 'move';
-            });
-
-            draggable.addEventListener('dragend', () => {
-                draggable.classList.remove('dragging');
-            });
-        });
-
-        targets.forEach(target => {
-            target.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                target.classList.add('drag-over');
-            });
-
-            target.addEventListener('dragleave', () => {
-                target.classList.remove('drag-over');
-            });
-
-            target.addEventListener('drop', (e) => {
-                e.preventDefault();
-                target.classList.remove('drag-over');
-
-                const id = e.dataTransfer.getData('text/plain');
-                const draggable = document.getElementById(id);
-
-                if (draggable && !target.querySelector('.draggable')) {
-
-                    const newDraggable = draggable.cloneNode(true);
-                    newDraggable.classList.remove('dragging');
-                    newDraggable.style.cursor = 'default';
-                    newDraggable.removeAttribute('draggable');
-
-                    target.innerHTML = '';
-                    target.appendChild(newDraggable);
-                    target.dataset.user = id;
-
-                    // Eliminar la tarjeta original de la izquierda
-                    draggable.remove();
-                }
-            });
-        });
-
-        function verificarDrag() {
-            const targets = document.querySelectorAll('.target');
-            let correctas = 0;
-            let contestadas = 0;
-
-            targets.forEach(target => {
-                if (target.dataset.user) {
-                    contestadas++;
-                    target.classList.remove('correct', 'incorrect');
-
-                    if (target.dataset.user === target.dataset.match) {
-                        target.classList.add('correct');
-                        correctas++;
-                    } else {
-                        target.classList.add('incorrect');
-                    }
-                }
-            });
-
-            const feed = document.getElementById('feed3');
-            feed.style.display = 'block';
-            feed.classList.remove('celebrate');
-
-            if (contestadas < 4) {
-                feed.className = 'feedback incorrecto';
-                feed.innerHTML = `<span class="feedback-icon">⚠️</span><strong>¡Faltan respuestas!</strong><br>Aún hay ${4 - contestadas} elementos sin arrastrar.`;
-                return;
-            }
-
-            if (correctas === 4) {
-                feed.className = 'feedback correcto';
-                feed.innerHTML = `<span class="feedback-icon">🎉</span><strong>¡Excelente!</strong><br>¡Todas las asociaciones son correctas!`;
-                setTimeout(() => feed.classList.add('celebrate'), 10);
-            } else {
-                feed.className = 'feedback incorrecto';
-                feed.innerHTML = `<span class="feedback-icon">❌</span><strong>incorrecto.</strong><br>Has acertado <strong>${correctas} de 4</strong> relaciones. Revisa las opciones e intenta nuevamente.`;
-            }
-            // Mostrar nuevamente las tarjetas arrastrables
-            document.querySelectorAll('.draggable').forEach(item => {
-                item.style.display = 'block';
-            });
-        }
-
-
-
-    </script>
+</script>
 
 </body>
-
-</html>
-
-</body>
-
 </html>
